@@ -136,22 +136,6 @@ public class ParticipantService {
         }
     }
 
-    public Participant toogleActiveStatus(Long id, Boolean active) {
-        Optional<Participant> participantOptional = participantRepository.findByIdAndDeletedAtIsNull(id);
-
-        if (participantOptional.isPresent()) {
-            Participant participant =  participantOptional.get();
-            participant.setActive(active);
-            statusMessage = SUCCESS;
-            responseMessage = "Participant Status Updated Successfully.";
-            return participantRepository.save(participant);
-        } else {
-            statusMessage = FAILED;
-            responseMessage = "Participant Not Found.";
-            return null;
-        }
-    }
-
     private boolean isValidName(String name) {
         return name.matches("^[a-zA-Z ]+$");
     }

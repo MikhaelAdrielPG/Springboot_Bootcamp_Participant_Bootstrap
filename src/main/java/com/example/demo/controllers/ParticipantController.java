@@ -39,7 +39,6 @@ public class ParticipantController {
         }
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getParticipantById(@PathVariable("id") Long id) {
         ParticipantResponse participant = participantService.getParticipantById(id);
@@ -66,7 +65,6 @@ public class ParticipantController {
         }
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateParticipant(@PathVariable("id") Long id, @RequestBody ParticipantRequest participantRequest) {
         Participant participant = participantService.updateParticipant(id, participantRequest);
@@ -89,20 +87,6 @@ public class ParticipantController {
         if (participants != null) {
             return ResponseEntity.status(HttpStatus.OK).body(response);
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-    }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse> toggleParticipantStatus(@PathVariable("id") Long id, @RequestParam("active") Boolean active) {
-        Participant participant = participantService.toogleActiveStatus(id, active);
-
-        if (participant != null) {
-            ParticipantResponse participantResponse = new ParticipantResponse(participant.getName(), participant.getAddress(), participant.getPhone(), participant.getActive());
-            ApiResponse response = new ApiResponse(participantService.getStatusMessage(), participantService.getResponseMessage(), participantResponse);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        } else {
-            ApiResponse response = new ApiResponse(participantService.getStatusMessage(), participantService.getResponseMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
